@@ -2,6 +2,10 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GameCard } from "@/components/GameCard";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "@/contexts/CartContext";
+import { LoginDialog } from "@/components/LoginDialog";
+import { useToast } from "@/hooks/use-toast";
 import gameHero1 from "@/assets/game-hero-1.jpg";
 import gameHero2 from "@/assets/game-hero-2.jpg";
 import gameHero3 from "@/assets/game-hero-3.jpg";
@@ -71,6 +75,11 @@ const popularGames = [
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoggedIn] = useState(false);
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const { toast } = useToast();
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % featuredGames.length);
@@ -82,8 +91,27 @@ export default function Home() {
 
   const currentGame = featuredGames[currentSlide];
 
+  const handleBuyNow = () => {
+    if (!isLoggedIn) {
+      setShowLoginDialog(true);
+      return;
+    }
+    addToCart(currentGame);
+    navigate("/checkout");
+  };
+
+  const handleViewDetails = () => {
+    navigate(`/game/${currentGame.id}`);
+  };
+
   return (
     <main className="min-h-screen">
+      <LoginDialog
+        open={showLoginDialog}
+        onOpenChange={setShowLoginDialog}
+        onLoginSuccess={() => {}}
+      />
+
       {/* Hero Carousel */}
       <section className="relative h-[70vh] bg-background overflow-hidden">
         {/* Background Image */}
@@ -110,10 +138,10 @@ export default function Home() {
               {currentGame.description}
             </p>
             <div className="flex items-center space-x-4">
-              <Button variant="hero" size="lg">
+              <Button variant="hero" size="lg" onClick={handleBuyNow}>
                 Buy Now - {currentGame.price}
               </Button>
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" onClick={handleViewDetails}>
                 View Details
               </Button>
             </div>

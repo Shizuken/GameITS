@@ -49,29 +49,29 @@ export default function Register() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Name */}
+            {/* Username */}
             <div className="space-y-2">
-              <Label htmlFor="nama" className="font-inter text-foreground">
-                Nama
+              <Label htmlFor="username" className="font-inter text-foreground">
+                Username
               </Label>
               <Input
-                id="nama"
+                id="username"
                 type="text"
-                placeholder="Enter your full name"
+                placeholder="Enter your username"
                 required
                 className="bg-card/50 border-primary/30 focus:border-primary focus:shadow-glow-cyan transition-all h-12"
               />
             </div>
 
-            {/* Email ITS */}
+            {/* Email */}
             <div className="space-y-2">
               <Label htmlFor="email" className="font-inter text-foreground">
-                Email ITS
+                Email
               </Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="your.email@its.ac.id"
+                placeholder="your.email@example.com"
                 required
                 className="bg-card/50 border-primary/30 focus:border-primary focus:shadow-glow-cyan transition-all h-12"
               />
@@ -85,7 +85,7 @@ export default function Register() {
               <Input
                 id="ewallet"
                 type="text"
-                placeholder="GoPay/OVO/Dana account"
+                placeholder="Enter your e-wallet account"
                 required
                 className="bg-card/50 border-primary/30 focus:border-primary focus:shadow-glow-cyan transition-all h-12"
               />
@@ -94,12 +94,26 @@ export default function Register() {
             {/* Phone Number */}
             <div className="space-y-2">
               <Label htmlFor="phone" className="font-inter text-foreground">
-                No HP
+                Phone Number
               </Label>
               <Input
                 id="phone"
                 type="tel"
-                placeholder="08xxxxxxxxxx"
+                placeholder="+1234567890"
+                required
+                className="bg-card/50 border-primary/30 focus:border-primary focus:shadow-glow-cyan transition-all h-12"
+              />
+            </div>
+
+            {/* Region */}
+            <div className="space-y-2">
+              <Label htmlFor="region" className="font-inter text-foreground">
+                Region
+              </Label>
+              <Input
+                id="region"
+                type="text"
+                placeholder="Enter your region/country"
                 required
                 className="bg-card/50 border-primary/30 focus:border-primary focus:shadow-glow-cyan transition-all h-12"
               />

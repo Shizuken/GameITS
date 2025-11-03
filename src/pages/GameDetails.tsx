@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Star, ShoppingCart, ArrowLeft, Monitor, Gamepad2, Smartphone } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Star, ShoppingCart, ArrowLeft, Monitor, Gamepad2, Smartphone, Send } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { LoginDialog } from "@/components/LoginDialog";
 import { useToast } from "@/hooks/use-toast";
@@ -56,6 +57,12 @@ export default function GameDetails() {
   const { toast } = useToast();
   const [isLoggedIn] = useState(false);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
+  const [comments, setComments] = useState([
+    { username: "ShadowKnight92", text: "This game is absolutely incredible! The graphics are stunning and the storyline keeps you hooked for hours." },
+    { username: "MysticMage", text: "Best RPG I've played this year. The combat system is so smooth and the world-building is phenomenal." },
+    { username: "CyberNinja", text: "10/10 would recommend. The atmosphere is dark and immersive, exactly what I was looking for." },
+  ]);
+  const [newComment, setNewComment] = useState("");
 
   const game = gameId ? gamesData[gameId] : null;
 
@@ -95,6 +102,21 @@ export default function GameDetails() {
     PC: Monitor,
     Console: Gamepad2,
     Mobile: Smartphone,
+  };
+
+  const handlePostComment = () => {
+    if (!isLoggedIn) {
+      setShowLoginDialog(true);
+      return;
+    }
+    if (newComment.trim()) {
+      setComments([...comments, { username: "CurrentUser", text: newComment }]);
+      setNewComment("");
+      toast({
+        title: "Comment Posted",
+        description: "Your comment has been added successfully.",
+      });
+    }
   };
 
   return (
@@ -219,6 +241,70 @@ export default function GameDetails() {
                   Add to Cart
                 </Button>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Comment Section */}
+        <div className="container mx-auto px-4 pb-16 mt-8">
+          <div className="bg-gradient-panel border border-primary/30 rounded-lg p-8 shadow-glow-cyan backdrop-blur-xl">
+            <h2 className="font-cinzel font-bold text-2xl text-foreground mb-6">
+              Guild Chatboard
+            </h2>
+
+            {/* Comments List */}
+            <div className="space-y-4 mb-6">
+              {comments.map((comment, index) => (
+                <div
+                  key={index}
+                  className="bg-card/50 border border-primary/20 rounded-lg p-4 hover:border-primary/40 transition-colors"
+                >
+                  <p className="font-inter text-sm text-primary font-semibold mb-2">
+                    {comment.username}
+                  </p>
+                  <p className="font-inter text-foreground leading-relaxed">
+                    {comment.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Post Comment */}
+            <div className="space-y-4">
+              <div className="flex space-x-3">
+                <Input
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder={isLoggedIn ? "Share your thoughts..." : "Log in to post a comment"}
+                  disabled={!isLoggedIn}
+                  className="bg-card/50 border-primary/30 focus:border-primary focus:shadow-glow-cyan transition-all h-12"
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      handlePostComment();
+                    }
+                  }}
+                />
+                <Button
+                  onClick={handlePostComment}
+                  variant="hero"
+                  className="h-12 px-6"
+                  disabled={!isLoggedIn || !newComment.trim()}
+                >
+                  <Send className="w-4 h-4 mr-2" />
+                  Post
+                </Button>
+              </div>
+              {!isLoggedIn && (
+                <p className="text-sm text-muted-foreground font-inter">
+                  You must be logged in to post comments.{" "}
+                  <button
+                    onClick={() => setShowLoginDialog(true)}
+                    className="text-primary hover:underline font-semibold"
+                  >
+                    Log in here
+                  </button>
+                </p>
+              )}
             </div>
           </div>
         </div>
