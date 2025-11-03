@@ -151,9 +151,9 @@ export default function GameDetails() {
 
       {/* Game Info */}
       <section className="container mx-auto px-4 -mt-32 relative z-10 pb-16">
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-8 items-start">
           {/* Main Info */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-6 flex flex-col">
             <div>
               <span className="inline-block px-4 py-2 bg-primary/20 border border-primary/40 rounded-full text-sm text-primary font-inter backdrop-blur-sm mb-4">
                 {game.genre}
@@ -177,7 +177,7 @@ export default function GameDetails() {
               </p>
             </div>
 
-            <div className="bg-card border border-primary/20 rounded-lg p-6 shadow-panel">
+            <div className="bg-card border border-primary/20 rounded-lg p-6 shadow-panel flex-grow">
               <h2 className="font-cinzel font-bold text-xl text-foreground mb-4">Tags</h2>
               <div className="flex flex-wrap gap-2">
                 {game.tags.map((tag: string) => (
@@ -193,8 +193,8 @@ export default function GameDetails() {
           </div>
 
           {/* Purchase Panel */}
-          <div className="lg:col-span-1">
-            <div className="bg-gradient-panel border border-primary/30 rounded-lg p-6 shadow-glow-cyan backdrop-blur-xl space-y-6">
+          <div className="lg:col-span-1 flex">
+            <div className="bg-gradient-panel border border-primary/30 rounded-lg p-6 shadow-glow-cyan backdrop-blur-xl space-y-6 flex-grow">
               <div>
                 <h3 className="font-cinzel font-bold text-2xl text-foreground mb-2">
                   {game.title}
