@@ -194,7 +194,7 @@ export default function GameDetails() {
 
           {/* Purchase Panel */}
           <div className="lg:col-span-1">
-            <div className="bg-gradient-panel border border-primary/30 rounded-lg p-6 shadow-glow-cyan backdrop-blur-xl sticky top-24 space-y-6">
+            <div className="bg-gradient-panel border border-primary/30 rounded-lg p-6 shadow-glow-cyan backdrop-blur-xl space-y-6">
               <div>
                 <h3 className="font-cinzel font-bold text-2xl text-foreground mb-2">
                   {game.title}
