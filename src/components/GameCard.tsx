@@ -1,7 +1,13 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Star } from "lucide-react";
+import { Star, ShoppingCart } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { LoginDialog } from "./LoginDialog";
+import { useToast } from "@/hooks/use-toast";
 
 interface GameCardProps {
+  id?: string;
   title: string;
   genre: string;
   description: string;
@@ -10,16 +16,59 @@ interface GameCardProps {
   rating?: number;
 }
 
-export const GameCard = ({ title, genre, description, price, image, rating = 4.5 }: GameCardProps) => {
+export const GameCard = ({ id, title, genre, description, price, image, rating = 4.5 }: GameCardProps) => {
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+  const [isLoggedIn] = useState(false);
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
+
+  const gameId = id || title.toLowerCase().replace(/\s+/g, "-");
+
+  const handleImageClick = () => {
+    navigate(`/game/${gameId}`);
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!isLoggedIn) {
+      setShowLoginDialog(true);
+      return;
+    }
+    addToCart({ id: gameId, title, price, image, genre });
+    toast({
+      title: "Added to Cart",
+      description: `${title} has been added to your cart.`,
+    });
+  };
+
+  const handleBuyNow = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!isLoggedIn) {
+      setShowLoginDialog(true);
+      return;
+    }
+    addToCart({ id: gameId, title, price, image, genre });
+    navigate("/checkout");
+  };
   return (
-    <div className="group relative bg-card border border-primary/20 rounded-lg overflow-hidden shadow-panel hover:shadow-glow-cyan transition-all duration-300 hover:-translate-y-2">
-      {/* Image */}
-      <div className="relative h-48 overflow-hidden">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        />
+    <>
+      <LoginDialog
+        open={showLoginDialog}
+        onOpenChange={setShowLoginDialog}
+        onLoginSuccess={() => {}}
+      />
+      <div className="group relative bg-card border border-primary/20 rounded-lg overflow-hidden shadow-panel hover:shadow-glow-cyan transition-all duration-300 hover:-translate-y-2">
+        {/* Image */}
+        <div
+          className="relative h-48 overflow-hidden cursor-pointer"
+          onClick={handleImageClick}
+        >
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
         
         {/* Floating Genre Badge */}
@@ -45,10 +94,21 @@ export const GameCard = ({ title, genre, description, price, image, rating = 4.5
         <div className="flex items-center justify-between pt-2">
           <span className="font-cinzel font-bold text-xl text-primary">{price}</span>
           <div className="flex space-x-2">
-            <Button variant="outline" size="sm" className="text-xs">
-              Details
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-xs"
+              onClick={handleAddToCart}
+            >
+              <ShoppingCart className="w-3 h-3 mr-1" />
+              Add to Cart
             </Button>
-            <Button variant="hero" size="sm" className="text-xs">
+            <Button
+              variant="hero"
+              size="sm"
+              className="text-xs"
+              onClick={handleBuyNow}
+            >
               Buy Now
             </Button>
           </div>
@@ -59,6 +119,7 @@ export const GameCard = ({ title, genre, description, price, image, rating = 4.5
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300">
         <div className="absolute inset-0 bg-gradient-cyber" />
       </div>
-    </div>
+      </div>
+    </>
   );
 };

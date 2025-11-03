@@ -134,13 +134,16 @@ export default function Login() {
           </form>
 
           {/* Footer */}
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center space-y-3">
             <p className="text-sm font-inter text-muted-foreground">
-              Don't have an account?{" "}
-              <a href="#" className="text-primary hover:underline font-semibold">
-                Join the Guild
-              </a>
+              Don't have an account?
             </p>
+            <a
+              href="/register"
+              className="block w-full px-6 py-3 bg-primary/20 border border-primary/40 rounded-lg text-primary font-inter font-semibold hover:bg-primary/30 hover:shadow-glow-cyan transition-all"
+            >
+              Join the Guild
+            </a>
           </div>
         </div>
       </div>

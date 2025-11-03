@@ -1,12 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
-import { Search, Menu } from "lucide-react";
+import { Search, Menu, ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useState } from "react";
+import { useCart } from "@/contexts/CartContext";
 
 export const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { cart } = useCart();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -15,7 +17,7 @@ export const Navbar = () => {
     { path: "/catalog", label: "Catalog" },
     { path: "/about", label: "About Us" },
     { path: "/dashboard", label: "Dashboard" },
-    { path: "/community", label: "Community" },
+    { path: "/cart", label: "Cart" },
   ];
 
   return (
@@ -25,9 +27,9 @@ export const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
             <div className="w-10 h-10 bg-gradient-cyber border border-primary/40 rounded-md flex items-center justify-center shadow-glow-cyan group-hover:shadow-glow-cyan group-hover:scale-110 transition-all">
-              <span className="font-cinzel font-bold text-primary text-xl">A</span>
+              <span className="font-cinzel font-bold text-primary text-xl">G</span>
             </div>
-            <span className="font-cinzel font-bold text-lg hidden sm:block">Arcane Games</span>
+            <span className="font-cinzel font-bold text-lg hidden sm:block">GameITS</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -59,8 +61,18 @@ export const Navbar = () => {
             </div>
           </div>
 
-          {/* Login Button & Menu */}
+          {/* Cart & Login Button & Menu */}
           <div className="flex items-center space-x-3">
+            <Link to="/cart" className="relative">
+              <Button variant="ghost" size="icon">
+                <ShoppingCart className="w-5 h-5" />
+                {cart.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-destructive rounded-full flex items-center justify-center text-xs text-white font-bold">
+                    {cart.length}
+                  </span>
+                )}
+              </Button>
+            </Link>
             <Link to="/login">
               <Button variant="outline" size="sm" className="hidden sm:inline-flex">
                 Login

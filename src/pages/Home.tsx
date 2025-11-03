@@ -8,7 +8,7 @@ import gameHero3 from "@/assets/game-hero-3.jpg";
 
 const featuredGames = [
   {
-    id: 1,
+    id: "legends-of-the-abyss",
     title: "Legends of the Abyss",
     genre: "Dark Fantasy RPG",
     description: "Venture into ancient ruins beneath a cyan-glowing mystical sky. Face epic challenges as you seek forgotten treasures and dark secrets.",
@@ -16,7 +16,7 @@ const featuredGames = [
     image: gameHero1,
   },
   {
-    id: 2,
+    id: "neon-dystopia",
     title: "Neon Dystopia",
     genre: "Cyberpunk Noir",
     description: "Navigate a neon-lit cityscape filled with intrigue and danger. Uncover conspiracies in this atmospheric sci-fi thriller.",
@@ -24,7 +24,7 @@ const featuredGames = [
     image: gameHero2,
   },
   {
-    id: 3,
+    id: "shadow-knight-chronicles",
     title: "Shadow Knight Chronicles",
     genre: "Action Adventure",
     description: "Don the obsidian armor of a legendary knight. Battle through dark realms with glowing cyan runes as your only light.",
@@ -35,7 +35,8 @@ const featuredGames = [
 
 const popularGames = [
   {
-    title: "Arcane Warfare",
+    id: "mystical-warfare",
+    title: "Mystical Warfare",
     genre: "Strategy",
     description: "Command mystical armies in tactical battles across enchanted realms.",
     price: "$29.99",
