@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 import { LoginDialog } from "@/components/LoginDialog";
 import { useToast } from "@/hooks/use-toast";
+import Footer from "@/components/Footer";
 import gameHero1 from "@/assets/game-hero-1.jpg";
 import gameHero2 from "@/assets/game-hero-2.jpg";
 import gameHero3 from "@/assets/game-hero-3.jpg";
@@ -105,99 +106,103 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <LoginDialog
         open={showLoginDialog}
         onOpenChange={setShowLoginDialog}
         onLoginSuccess={() => {}}
       />
 
-      {/* Hero Carousel */}
-      <section className="relative h-[70vh] bg-background overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <img
-            src={currentGame.image}
-            alt={currentGame.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background/80" />
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
-          <div className="max-w-2xl space-y-6">
-            <span className="inline-block px-4 py-2 bg-primary/20 border border-primary/40 rounded-full text-sm text-primary font-inter backdrop-blur-sm">
-              {currentGame.genre}
-            </span>
-            <h1 className="font-cinzel font-black text-5xl md:text-7xl text-foreground leading-tight animate-float">
-              {currentGame.title}
-            </h1>
-            <p className="text-lg text-muted-foreground font-inter max-w-xl">
-              {currentGame.description}
-            </p>
-            <div className="flex items-center space-x-4">
-              <Button variant="hero" size="lg" onClick={handleBuyNow}>
-                Buy Now - {currentGame.price}
-              </Button>
-              <Button variant="outline" size="lg" onClick={handleViewDetails}>
-                View Details
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Navigation Arrows */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-card/50 backdrop-blur-sm border border-primary/30 rounded-full flex items-center justify-center hover:bg-primary/20 hover:shadow-glow-cyan transition-all z-20"
-        >
-          <ChevronLeft className="w-6 h-6 text-primary" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-card/50 backdrop-blur-sm border border-primary/30 rounded-full flex items-center justify-center hover:bg-primary/20 hover:shadow-glow-cyan transition-all z-20"
-        >
-          <ChevronRight className="w-6 h-6 text-primary" />
-        </button>
-
-        {/* Slide Indicators */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
-          {featuredGames.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentSlide
-                  ? "bg-primary w-8 shadow-glow-cyan"
-                  : "bg-muted-foreground/50 hover:bg-muted-foreground"
-              }`}
+      <main className="flex-1">
+        {/* Hero Carousel */}
+        <section className="relative h-[70vh] bg-background overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img
+              src={currentGame.image}
+              alt={currentGame.title}
+              className="w-full h-full object-cover"
             />
-          ))}
-        </div>
-      </section>
-
-      {/* Popular Games Section */}
-      <section className="py-16 bg-gradient-to-b from-background to-card/30">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="font-cinzel font-bold text-3xl md:text-4xl text-foreground mb-2">
-                Popular Games
-              </h2>
-              <div className="h-1 w-24 bg-gradient-to-r from-primary to-transparent rounded-full" />
-            </div>
-            <Button variant="outline">View All</Button>
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background/80" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {popularGames.map((game, index) => (
-              <GameCard key={index} {...game} />
+          {/* Content */}
+          <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
+            <div className="max-w-2xl space-y-6">
+              <span className="inline-block px-4 py-2 bg-primary/20 border border-primary/40 rounded-full text-sm text-primary font-inter backdrop-blur-sm">
+                {currentGame.genre}
+              </span>
+              <h1 className="font-cinzel font-black text-5xl md:text-7xl text-foreground leading-tight animate-float">
+                {currentGame.title}
+              </h1>
+              <p className="text-lg text-muted-foreground font-inter max-w-xl">
+                {currentGame.description}
+              </p>
+              <div className="flex items-center space-x-4">
+                <Button variant="hero" size="lg" onClick={handleBuyNow}>
+                  Buy Now - {currentGame.price}
+                </Button>
+                <Button variant="outline" size="lg" onClick={handleViewDetails}>
+                  View Details
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-card/50 backdrop-blur-sm border border-primary/30 rounded-full flex items-center justify-center hover:bg-primary/20 hover:shadow-glow-cyan transition-all z-20"
+          >
+            <ChevronLeft className="w-6 h-6 text-primary" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-card/50 backdrop-blur-sm border border-primary/30 rounded-full flex items-center justify-center hover:bg-primary/20 hover:shadow-glow-cyan transition-all z-20"
+          >
+            <ChevronRight className="w-6 h-6 text-primary" />
+          </button>
+
+          {/* Slide Indicators */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
+            {featuredGames.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentSlide
+                    ? "bg-primary w-8 shadow-glow-cyan"
+                    : "bg-muted-foreground/50 hover:bg-muted-foreground"
+                }`}
+              />
             ))}
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+
+        {/* Popular Games Section */}
+        <section className="py-16 bg-gradient-to-b from-background to-card/30">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="font-cinzel font-bold text-3xl md:text-4xl text-foreground mb-2">
+                  Popular Games
+                </h2>
+                <div className="h-1 w-24 bg-gradient-to-r from-primary to-transparent rounded-full" />
+              </div>
+              <Button variant="outline">View All</Button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {popularGames.map((game, index) => (
+                <GameCard key={index} {...game} />
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+      
+      <Footer />
+    </div>
   );
 }
