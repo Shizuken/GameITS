@@ -6,6 +6,29 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Sparkles } from "lucide-react";
 import Footer from "@/components/Footer";
 
+
+async function loginUser(email, password) {
+  try {
+    const response = await fetch("http://localhost:3000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      alert("Login berhasil! Selamat datang, " + data.user.username);
+      window.location.href = "/cart"; // redirect ke halaman cart
+    } else {
+      alert(data.error);
+    }
+  } catch (error) {
+    console.error("Login failed:", error);
+  }
+}
+
+
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 

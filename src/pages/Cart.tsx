@@ -6,6 +6,8 @@ import { Trash2, ShoppingCart } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import Footer from "@/components/Footer";
 
+
+
 export default function Cart() {
   const navigate = useNavigate();
   const { cart, removeFromCart } = useCart();
@@ -16,6 +18,8 @@ export default function Cart() {
       prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
     );
   };
+
+
 
   const calculateTotal = () => {
     return cart
